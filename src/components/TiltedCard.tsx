@@ -1,6 +1,7 @@
 import type { SpringOptions } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
+import Dither from '../backgrounds/Dither/Dither';
 
 interface TiltedCardProps {
   imageSrc: React.ComponentProps<'img'>['src'];
@@ -117,21 +118,27 @@ export default function TiltedCard({
           scale,
         }}
       >
+        <Dither className="rounded-xl z-1 opacity-40"/>
+
         <motion.img
           src={imageSrc}
           alt={altText}
-          className="absolute top-0 left-0 [transform:translateZ(0)] rounded-[15px] object-cover will-change-transform"
+          className="absolute top-0 left-0 [transform:translateZ(0)] rounded-[15px] object-cover will-change-transform z-2 grayscale hover:grayscale-0 transition duration-900"
           style={{
             width: imageWidth,
             height: imageHeight,
           }}
-        />
-
+        >
+        </motion.img>
         {displayOverlayContent && overlayContent && (
-          <motion.div className="[transform:translateZ(30px)] will-change-transform bg-black opacity-50 text-white w-fit p-2 rounded-md mx-auto mt-5">
+          <motion.div className="[transform:translateZ(30px)] z-4 will-change-transform bg-black opacity-50 text-white w-fit p-2 rounded-md absolute left-0 right-0 mx-auto text-center" 
+          style={{ top: '10%' }}
+          >
             {overlayContent}
           </motion.div>
         )}
+        
+
       </motion.div>
 
       {/* {showTooltip && (

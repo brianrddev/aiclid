@@ -13,18 +13,18 @@ export default function Galeria() {
 
   return (
     <section id="galeria" className="h-[100dvh] p-8 bg-gray-100">
-      <h2 className="mb-4 text-2xl font-semibold">Galería de Células</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <h2 className="mb-4 text-7xl font-medium text-black">Galería de Células</h2>
+      <div className="flex flex-wrap items-center justify-center gap-4">
         {celulas.map((celula, i) => (
           <TiltedCard
             key={i}
-            className="bg-gray-300 rounded-xl shadow-lg"
+            className="bg-gray-300 rounded-xl shadow-lg z-0"
             imageSrc={`./${celula.toLowerCase()}.png`} // asumiendo que el nombre del archivo coincide
             altText={celula}
             containerHeight="300px"
             containerWidth="300px"
-            imageHeight="300px"
-            imageWidth="300px"
+            imageHeight="250px"
+            imageWidth="250px"
             rotateAmplitude={12}
             scaleOnHover={1.2}
             showMobileWarning={false}
