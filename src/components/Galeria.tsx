@@ -19,7 +19,7 @@ export default function Galeria() {
           <TiltedCard
             key={i}
             className="bg-gray-300 rounded-xl shadow-lg"
-            imageSrc={`./public/${celula.toLowerCase()}.png`} // asumiendo que el nombre del archivo coincide
+            imageSrc={`./${celula.toLowerCase()}.png`} // asumiendo que el nombre del archivo coincide
             altText={celula}
             containerHeight="300px"
             containerWidth="300px"
