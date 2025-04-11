@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <header className="absolute top-0 flex w-full items-center justify-between bg-white p-4 shadow-md">
+    <header className="absolute top-0 flex w-full items-center justify-between p-4 text-white">
       <h1 className="text-2xl font-bold">AICLID</h1>
       <nav className="space-x-4">
         <a href="#inicio" className="hover:underline">
