@@ -14,7 +14,7 @@ function App() {
       <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
         {/* Header */}
         <Header />
-
+        
         {/* Main Sections */}
         <main className="flex-grow">
           {/* Inicio */}
