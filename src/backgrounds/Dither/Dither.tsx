@@ -300,6 +300,7 @@ interface DitherProps {
   disableAnimation?: boolean;
   enableMouseInteraction?: boolean;
   mouseRadius?: number;
+  className?: string;
 }
 
 export default function Dither({
@@ -312,10 +313,11 @@ export default function Dither({
   disableAnimation = false,
   enableMouseInteraction = true,
   mouseRadius = 1,
+  className = '',
 }: DitherProps) {
   return (
     <Canvas
-      className="relative h-full w-full"
+      className={`relative h-full w-full ${className}`}
       camera={{ position: [0, 0, 6] }}
       dpr={window.devicePixelRatio}
       gl={{ antialias: true, preserveDrawingBuffer: true }}
