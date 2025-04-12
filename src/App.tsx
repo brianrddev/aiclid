@@ -12,31 +12,15 @@ function App() {
   return (
     <>
       <div className="grid min-h-screen grid-rows-[auto_1fr_auto] text-gray-200">
-        {/* Header */}
         <Header />
-        
-        {/* Main Sections */}
         <main className="flex-grow">
-          {/* Inicio */}
           <Inicio />
-
-          {/* Nuestra Misión */}
           <NuestraMision />
-
-          {/* Galería de Células */}
           <Galeria />
-
-          {/* ¿Cómo Funciona la IA? */}
           <ComoFunciona />
-
-          {/* El Equipo */}
           <Equipo />
-
-          {/* Contacto */}
           <Contacto />
         </main>
-
-        {/* Footer */}
         <Footer />
       </div>
     </>

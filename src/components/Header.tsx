@@ -12,7 +12,7 @@ export default function Header() {
   ];
   return (
     <header className="absolute top-0 flex w-full items-center justify-between overflow-hidden px-16 pt-8">
-      <Logo className="h-14 w-14 text-red-500" />
+      <Logo className="h-14 w-14 text-white" />
       <GooeyNav items={items} />
     </header>
   );

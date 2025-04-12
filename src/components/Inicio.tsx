@@ -3,12 +3,13 @@ import Dither from '../backgrounds/Dither/Dither';
 export default function Inicio() {
   return (
     <>
-      <div className="absolute -z-10 h-[100dvh] w-full mask-b-from-70%">
+      <div className="absolute -z-10 h-[100dvh] w-full mask-b-from-70% blur-[.5px] backdrop-blur-2xl">
         <Dither
           pixelSize={1.2}
           colorNum={5}
           waveColor={[0.5, 0.5, 0.5]}
           waveSpeed={0.02}
+          waveAmplitude={0.3}
         />
       </div>
       <section
