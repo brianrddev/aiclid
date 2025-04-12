@@ -1,4 +1,5 @@
 import GooeyNav from './GooeyNav/GooeyNav';
+import Logo from './Logo';
 
 export default function Header() {
   const items = [
@@ -10,8 +11,8 @@ export default function Header() {
     { label: 'Contacto', href: '#' },
   ];
   return (
-    <header className="absolute top-0 flex w-full items-center justify-between overflow-hidden p-4 text-white">
-      <h1 className="text-2xl font-bold">AICLID</h1>
+    <header className="absolute top-0 flex w-full items-center justify-between overflow-hidden px-16 pt-8">
+      <Logo className="h-14 w-14 text-red-500" />
       <GooeyNav items={items} />
     </header>
   );
