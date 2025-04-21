@@ -19,7 +19,7 @@ export default function Inicio() {
         id="inicio"
         className="z-10 flex h-[100dvh] items-center justify-center p-8 text-center"
       >
-        <div className="text-white">
+        <div className="flex flex-col gap-8 text-white">
           <h2 className="text-8xl font-semibold tracking-wide">AICLID</h2>
           <p className="mx-auto max-w-2xl text-lg">
             Proyecto de etiquetado automático de imágenes de células como
