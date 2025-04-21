@@ -14,8 +14,7 @@ function ModelLoader() {
     // Creamos un loader para GLTF
     const loader = new GLTFLoader();
 
-    // Cargamos el archivo scene.gltf (asegúrate de que esté en /public/ y
-    // si requiere BIN, que esté en la misma carpeta con el nombre correcto).
+    // Cargamos el archivo scene.gltf
     loader.load(
       '/scene.gltf',
       (gltf) => {
@@ -27,34 +26,36 @@ function ModelLoader() {
         const center = box.getCenter(new THREE.Vector3());
         model.position.sub(center);
 
-        // 2. Escalar el modelo (ajusta según tu necesidad)
-        model.scale.set(2, 2, 2);
+        // 2. Escalar el modelo - aumentamos el tamaño
+        model.scale.set(35, 35, 35);
 
-        // 4. Reasignar texturas "metalnessMap/roughnessMap" y "normalMap"
-        //    a cada malla que tenga materiales (si esto no es necesario, puedes omitirlo).
+        // 3. Modificar materiales para quitar efecto metálico
         model.traverse((node) => {
           if (node.isMesh && node.material) {
-            const textureLoader = new THREE.TextureLoader();
+            // Crear un material más natural para la célula roja
+            const newMaterial = new THREE.MeshStandardMaterial({
+              color: new THREE.Color('#bb0000'), // Rojo más suave y natural
+              roughness: 0.8, // Alta rugosidad (menos reflejo)
+              metalness: 0.0, // Sin efecto metálico
+              flatShading: false, // Para una apariencia más suave
+            });
 
-            // Cargamos la textura de metal/roughness (mismo archivo)
-            const metalRoughTex = textureLoader.load(
-              '/textures/RBCtexture_metallicRoughness.png'
-            );
-            node.material.metalnessMap = metalRoughTex;
-            node.material.roughnessMap = metalRoughTex;
+            // Conservamos solo el mapa normal si existe
+            if (node.material.normalMap) {
+              const textureLoader = new THREE.TextureLoader();
+              const normalTex = textureLoader.load(
+                '/textures/RBCtexture_normal.png'
+              );
+              newMaterial.normalMap = normalTex;
+              newMaterial.normalScale = new THREE.Vector2(0.5, 0.5); // Reducir intensidad del normal map
+            }
 
-            // Cargamos la textura normal
-            const normalTex = textureLoader.load(
-              '/textures/RBCtexture_normal.png'
-            );
-            node.material.normalMap = normalTex;
+            // Añadir un poco de translucidez
+            newMaterial.transparent = true;
+            newMaterial.opacity = 0.9;
 
-            // (Opcional) Ajustar factores de metalness/roughness si lo deseas
-            node.material.metalness = 1.0;
-            node.material.roughness = 1.0;
-
-            // Asegúrate de actualizar estos mapas para que se muestren
-            node.material.needsUpdate = true;
+            // Aplicar el nuevo material
+            node.material = newMaterial;
           }
         });
 
@@ -117,29 +118,25 @@ function ModelLoader() {
 export default function CellViewer() {
   return (
     <Canvas
-      className="h-full w-full bg-black mask-t-from-80% mask-l-from-80%"
+      className="h-full w-full bg-transparent"
       camera={{
-        position: [90, 80, 40],
-        fov: 1.5,
-        near: 0.1,
+        // Alejamos la cámara para poder ver el modelo completo a pesar de ser más grande
+        position: [120, -500, 0],
+        fov: 8, // Aumentamos ligeramente el campo de visión
+        near: 1,
         far: 1000,
       }}
     >
-      {/* Iluminación ambiente */}
-      <ambientLight intensity={100} />
+      {/* Iluminación suavizada para material no metálico */}
+      <ambientLight intensity={2} />
 
-      {/* Luz direccional (simula el sol) */}
-      <directionalLight position={[20, 20, 20]} intensity={7} />
+      {/* Luz direccional más suave */}
+      <directionalLight position={[120, 10, 20]} intensity={3} />
 
-      {/* Luz de foco */}
-      <spotLight
-        position={[5, 5, 5]}
-        intensity={1}
-        angle={0.9}
-        penumbra={0.1}
-      />
+      {/* Luz de relleno suave */}
+      <hemisphereLight groundColor="#330000" intensity={2} />
 
-      {/* Componente que carga el modelo y aplica texturas */}
+      {/* Componente que carga el modelo y aplica materiales no metálicos */}
       <ModelLoader />
     </Canvas>
   );

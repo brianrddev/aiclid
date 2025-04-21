@@ -11,8 +11,8 @@ export default function Header() {
     { label: 'Contacto', href: '#' },
   ];
   return (
-    <header className="absolute top-0 flex w-full items-center justify-between overflow-hidden px-16 pt-8">
-      <Logo className="h-14 w-14 text-white" />
+    <header className="absolute right-0 left-0 mx-auto mt-4 flex w-full max-w-7xl items-center justify-between gap-8 overflow-hidden p-4 px-8 text-[14px]">
+      <Logo className="h-8 w-8 text-white" />
       <GooeyNav items={items} />
     </header>
   );

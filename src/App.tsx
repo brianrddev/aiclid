@@ -11,7 +11,7 @@ import NuestraMision from './components/NuestraMision';
 function App() {
   return (
     <>
-      <div className="grid min-h-screen grid-rows-[auto_1fr_auto] text-gray-200">
+      <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
         <Header />
         <main className="flex-grow">
           <Inicio />
