@@ -92,7 +92,7 @@ export default function Footer() {
           <h3 className="mb-4 text-xl font-semibold after:mt-1 after:block after:h-1 after:w-12 after:bg-white">
             Nuestra ubicación
           </h3>
-          <div className="mb-6 space-y-2 text-sm">
+          <div className="mb-6 flex items-center justify-between space-y-2 text-sm">
             <p className="flex items-start">
               <svg
                 className="mr-2 h-5 w-5 flex-shrink-0"
