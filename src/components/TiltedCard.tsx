@@ -93,7 +93,7 @@ export default function TiltedCard({
   return (
     <figure
       ref={ref}
-      className={`relative flex h-full w-full flex-col items-center justify-center [perspective:800px] `}
+      className={`group relative flex h-full w-full flex-col items-center justify-center [perspective:800px]`}
       style={{
         height: containerHeight,
         width: containerWidth,
@@ -118,27 +118,23 @@ export default function TiltedCard({
           scale,
         }}
       >
-        <Dither className="rounded-xl z-1 opacity-40"/>
-
         <motion.img
           src={imageSrc}
           alt={altText}
-          className="absolute top-0 left-0 [transform:translateZ(0)] rounded-[15px] object-cover will-change-transform z-2 grayscale hover:grayscale-0 transition duration-900"
+          className="absolute top-0 left-0 z-2 [transform:translateZ(0)] rounded-[15px] object-cover grayscale transition duration-100 will-change-transform group-hover:grayscale-0"
           style={{
             width: imageWidth,
             height: imageHeight,
           }}
-        >
-        </motion.img>
+        />
         {displayOverlayContent && overlayContent && (
-          <motion.div className="[transform:translateZ(30px)] z-4 will-change-transform bg-black opacity-50 text-white w-fit p-2 rounded-md absolute left-0 right-0 mx-auto text-center" 
-          style={{ top: '10%' }}
+          <motion.div
+            className="absolute right-0 left-0 z-4 mx-auto w-fit [transform:translateZ(30px)] rounded-md bg-black p-2 text-center text-white opacity-50 will-change-transform"
+            style={{ top: '10%' }}
           >
             {overlayContent}
           </motion.div>
         )}
-        
-
       </motion.div>
 
       {/* {showTooltip && (
