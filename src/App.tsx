@@ -7,12 +7,14 @@ import Galeria from './components/Galeria';
 import Header from './components/Header';
 import Inicio from './components/Inicio';
 import NuestraMision from './components/NuestraMision';
+import { ScrollDots } from './components/ScrollDots';
 
 function App() {
   return (
     <>
       <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
         <Header />
+        <ScrollDots />
         <main className="flex-grow">
           <Inicio />
           <NuestraMision />
