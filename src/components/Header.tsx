@@ -15,7 +15,10 @@ export default function Header() {
   const duration = 500; // ms
 
   return (
-    <header className="absolute right-0 left-0 mx-auto mt-4 flex w-full max-w-7xl items-center justify-between gap-8 overflow-visible bg-transparent p-4 px-8 text-[14px]">
+    <header
+      className="absolute right-0 left-0 mx-auto mt-4 flex w-full max-w-7xl items-center justify-between gap-8 overflow-visible bg-transparent p-4 px-8 text-[14px]"
+      style={{ overflow: 'visible' }}
+    >
       <Logo className="h-8 w-8 text-white" />
       {/* Desktop nav */}
       <div className="hidden sm:block">
