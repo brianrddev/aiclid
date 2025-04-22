@@ -17,7 +17,7 @@ function App() {
         <Header />
         <ScrollDots />
         <SectionSnapScroll />
-        <main className="flex-grow snap-y snap-mandatory overflow-y-auto w-full min-w-full">
+        <main className="w-full min-w-full flex-grow snap-y snap-mandatory overflow-y-auto">
           <Inicio />
           <NuestraMision />
           <Galeria />
