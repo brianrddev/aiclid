@@ -29,7 +29,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-black text-white">
+    <footer className="h-[100dvh] bg-black text-white">
       {/* Main section */}
       <div className="container mx-auto grid grid-cols-1 gap-8 px-6 py-12 md:grid-cols-2">
         {/* Contact Form */}
