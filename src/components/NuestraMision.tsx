@@ -5,7 +5,7 @@ export default function NuestraMision() {
   return (
     <section
       id="mision"
-      className="relative flex h-[100dvh] w-full overflow-hidden bg-gray-100 mask-t-from-99% p-8 text-black backdrop-blur-sm"
+      className="relative flex h-[100dvh] w-full snap-start overflow-hidden bg-gray-100 mask-t-from-99% p-8 text-black backdrop-blur-sm"
     >
       <div className="mt-8 ml-12 flex w-1/2 flex-col gap-24">
         <h2 className="text-6xl font-medium tracking-wider">Nuestra Misión</h2>

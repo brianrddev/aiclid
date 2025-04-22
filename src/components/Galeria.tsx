@@ -12,7 +12,10 @@ export default function Galeria() {
   ];
 
   return (
-    <section id="galeria" className="flex h-[100dvh] flex-col bg-gray-100 p-8">
+    <section
+      id="galeria"
+      className="flex h-[100dvh] snap-start flex-col bg-gray-100 p-8"
+    >
       <div className="mr-12">
         <h2 className="text-right text-6xl font-medium text-black">
           Galería de Células

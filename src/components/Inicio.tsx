@@ -17,7 +17,7 @@ export default function Inicio() {
       </div>
       <section
         id="inicio"
-        className="z-10 flex h-[100dvh] items-center justify-center p-8 text-center"
+        className="z-10 flex h-[100dvh] snap-start items-center justify-center p-8 text-center"
       >
         <div className="flex flex-col gap-8 text-white">
           <h2 className="text-8xl font-semibold tracking-wide">AICLID</h2>

@@ -8,14 +8,16 @@ import Header from './components/Header';
 import Inicio from './components/Inicio';
 import NuestraMision from './components/NuestraMision';
 import { ScrollDots } from './components/ScrollDots';
+import { SectionSnapScroll } from './components/SectionSnapScroll';
 
 function App() {
   return (
     <>
-      <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
+      <div className="grid min-h-screen w-full min-w-full grid-rows-[auto_1fr_auto]">
         <Header />
         <ScrollDots />
-        <main className="flex-grow">
+        <SectionSnapScroll />
+        <main className="flex-grow snap-y snap-mandatory overflow-y-auto w-full min-w-full">
           <Inicio />
           <NuestraMision />
           <Galeria />

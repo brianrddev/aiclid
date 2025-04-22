@@ -2,7 +2,7 @@ export default function ComoFunciona() {
   return (
     <section
       id="ia"
-      className="relative flex h-[100dvh] flex-col items-center bg-gray-100 p-8 text-gray-950"
+      className="relative flex h-[100dvh] snap-start flex-col items-center bg-gray-100 p-8 text-gray-950"
     >
       <h2 className="mb-24 text-6xl font-semibold">¿Cómo Funciona la IA?</h2>
       <ol className="mx-auto max-w-3xl space-y-6 text-xl">
