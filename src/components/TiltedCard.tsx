@@ -93,26 +93,30 @@ export default function TiltedCard({
   return (
     <figure
       ref={ref}
-      className={`group relative flex h-full w-full flex-col items-center justify-center [perspective:800px]`}
+      className={`group relative flex h-[160px] h-full w-full flex-col items-center justify-center [perspective:800px] sm:h-full sm:w-full`}
       style={{
-        height: containerHeight,
-        width: containerWidth,
+        height: '100%',
+        width: '100%',
+        maxWidth: '100%',
+        maxHeight: '100%',
       }}
       onMouseMove={handleMouse}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+      {/* Oculta advertencia en móvil y ajusta tamaño */}
       {showMobileWarning && (
-        <div className="absolute top-4 block text-center text-sm sm:hidden">
-          This effect is not optimized for mobile. Check on desktop.
+        <div className="absolute top-2 left-1/2 hidden -translate-x-1/2 text-center text-xs sm:hidden">
+          {/* Oculto en móvil */}
         </div>
       )}
-
       <motion.div
         className={`relative [transform-style:preserve-3d] ` + className}
         style={{
-          width: imageWidth,
-          height: imageHeight,
+          width: '100%',
+          height: '100%',
+          maxWidth: '100%',
+          maxHeight: '100%',
           rotateX,
           rotateY,
           scale,
@@ -121,35 +125,19 @@ export default function TiltedCard({
         <motion.img
           src={imageSrc}
           alt={altText}
-          className="absolute top-0 left-0 z-2 [transform:translateZ(0)] rounded-[15px] object-cover grayscale transition duration-100 will-change-transform group-hover:grayscale-0"
-          style={{
-            width: imageWidth,
-            height: imageHeight,
-          }}
+          className="absolute top-0 left-0 z-2 mx-auto h-[120px] w-[120px] [transform:translateZ(0)] rounded-[12px] object-cover grayscale transition duration-100 will-change-transform group-hover:grayscale-0 sm:h-[180px] sm:w-[180px]"
+          style={{}}
         />
         {displayOverlayContent && overlayContent && (
           <motion.div
-            className="absolute right-0 left-0 z-4 mx-auto w-fit [transform:translateZ(30px)] rounded-md bg-black p-2 text-center text-white opacity-50 will-change-transform"
+            className="absolute right-0 left-0 z-4 mx-auto w-fit [transform:translateZ(30px)] rounded-md bg-black p-1 text-center text-xs text-white opacity-60 will-change-transform sm:text-sm"
             style={{ top: '10%' }}
           >
             {overlayContent}
           </motion.div>
         )}
       </motion.div>
-
-      {/* {showTooltip && (
-        <motion.figcaption
-          className="pointer-events-none absolute top-0 left-0 z-[3] hidden rounded-[4px] bg-white px-[10px] py-[4px] text-[10px] text-[#2d2d2d] opacity-0 sm:block"
-          style={{
-            x,
-            y,
-            opacity,
-            rotate: rotateFigcaption,
-          }}
-        >
-          {captionText}
-        </motion.figcaption>
-      )} */}
+      {/* Tooltips solo en desktop (ya estaban comentados) */}
     </figure>
   );
 }

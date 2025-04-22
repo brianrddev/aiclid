@@ -15,7 +15,14 @@ function App() {
     <>
       <div className="grid min-h-screen w-full min-w-full grid-rows-[auto_1fr_auto]">
         <Header />
-        <ScrollDots />
+        {/* ScrollDots: ocultar en móvil, mostrar en desktop/tablet y ajustar tamaño en móvil */}
+        <div className="hidden sm:block">
+          <ScrollDots />
+        </div>
+        {/* ScrollDots móvil: dots pequeños y abajo */}
+        <div className="pointer-events-none fixed right-0 bottom-4 left-0 z-50 flex justify-center gap-2 sm:hidden">
+          <ScrollDots mobile />
+        </div>
         <SectionSnapScroll />
         <main className="w-full min-w-full flex-grow snap-y snap-mandatory overflow-y-auto">
           <Inicio />
