@@ -20,7 +20,7 @@ function App() {
           <ScrollDots />
         </div>
         {/* ScrollDots móvil: dots pequeños y abajo */}
-        <div className="pointer-events-none fixed right-0 bottom-4 left-0 z-50 flex justify-center gap-2 sm:hidden">
+        <div className="pointer-events-none fixed right-0 bottom-6 left-0 z-50 flex justify-center gap-2 sm:hidden">
           <ScrollDots mobile />
         </div>
         <SectionSnapScroll />

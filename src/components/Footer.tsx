@@ -29,22 +29,25 @@ export default function Footer() {
   };
 
   return (
-    <footer id="footer" className="bg-black text-base text-white sm:text-base">
+    <footer
+      id="footer"
+      className="flex min-h-[100vh] flex-col bg-black text-base text-white sm:text-base"
+    >
       {/* Main section */}
-      <div className="container mx-auto grid grid-cols-1 gap-8 px-2 py-8 sm:px-6 sm:py-12 md:grid-cols-2">
+      <div className="container mx-auto grid min-h-0 flex-1 grid-cols-1 gap-4 px-2 py-4 sm:px-6 sm:py-12 md:grid-cols-2">
         {/* Contact Form */}
-        <div className="transition-transform">
-          <h3 className="mb-2 text-lg font-semibold after:mt-1 after:block after:h-1 after:w-12 after:bg-white sm:mb-4 sm:text-xl">
+        <div className="flex flex-col justify-center gap-2 text-[15px] transition-transform sm:text-base">
+          <h3 className="mb-1 text-base font-semibold after:mt-1 after:block after:h-0.5 after:w-10 after:bg-white sm:mb-4 sm:text-xl">
             Contáctanos
           </h3>
-          <form className="space-y-2 sm:space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-1 sm:space-y-4" onSubmit={handleSubmit}>
             <input
               type="text"
               name="name"
               value={formState.name}
               onChange={handleInputChange}
               placeholder="Nombre"
-              className="w-full rounded-none border-b border-white bg-transparent px-2 py-2 text-white placeholder-gray-400 transition-all focus:border-white focus:shadow-[0_0_10px_rgba(255,255,255,0.3)] focus:outline-none"
+              className="w-full rounded-none border-b border-white bg-transparent px-2 py-1 text-[15px] text-white placeholder-gray-400 transition-all focus:border-white focus:shadow-[0_0_10px_rgba(255,255,255,0.3)] focus:outline-none sm:text-base"
             />
             <input
               type="email"
@@ -52,50 +55,33 @@ export default function Footer() {
               value={formState.email}
               onChange={handleInputChange}
               placeholder="Correo electrónico"
-              className="w-full rounded-none border-b border-white bg-transparent px-2 py-2 text-white placeholder-gray-400 transition-all focus:border-white focus:shadow-[0_0_10px_rgba(255,255,255,0.3)] focus:outline-none"
-            />
-            <input
-              type="tel"
-              name="phone"
-              value={formState.phone}
-              onChange={handleInputChange}
-              placeholder="Teléfono"
-              className="w-full rounded-none border-b border-white bg-transparent px-2 py-2 text-white placeholder-gray-400 transition-all focus:border-white focus:shadow-[0_0_10px_rgba(255,255,255,0.3)] focus:outline-none"
-            />
-            <input
-              type="text"
-              name="subject"
-              value={formState.subject}
-              onChange={handleInputChange}
-              placeholder="Asunto"
-              className="w-full rounded-none border-b border-white bg-transparent px-2 py-2 text-white placeholder-gray-400 transition-all focus:border-white focus:shadow-[0_0_10px_rgba(255,255,255,0.3)] focus:outline-none"
+              className="w-full rounded-none border-b border-white bg-transparent px-2 py-1 text-[15px] text-white placeholder-gray-400 transition-all focus:border-white focus:shadow-[0_0_10px_rgba(255,255,255,0.3)] focus:outline-none sm:text-base"
             />
             <textarea
               name="message"
               value={formState.message}
               onChange={handleInputChange}
               placeholder="Mensaje"
-              rows={3}
-              className="w-full rounded-none border-b border-white bg-gray-200 px-2 py-2 text-white placeholder-gray-400 transition-all focus:border-white focus:shadow-[0_0_10px_rgba(255,255,255,0.3)] focus:outline-none"
+              rows={2}
+              className="w-full rounded-none border-b border-white bg-gray-200 px-2 py-1 text-[15px] text-white placeholder-gray-400 transition-all focus:border-white focus:shadow-[0_0_10px_rgba(255,255,255,0.3)] focus:outline-none sm:text-base"
             ></textarea>
             <button
               type="submit"
-              className="w-full border border-white bg-transparent py-2 text-white transition-all duration-300 hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+              className="w-full border border-white bg-transparent py-1.5 text-[15px] text-white transition-all duration-300 hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(255,255,255,0.4)] sm:text-base"
             >
               Enviar mensaje
             </button>
           </form>
         </div>
-
         {/* Información y Mapa */}
-        <div className="transition-transform">
-          <h3 className="mb-2 text-lg font-semibold after:mt-1 after:block after:h-1 after:w-12 after:bg-white sm:mb-4 sm:text-xl">
+        <div className="flex flex-col justify-center gap-2 text-[15px] transition-transform sm:text-base">
+          <h3 className="mb-1 text-base font-semibold after:mt-1 after:block after:h-0.5 after:w-10 after:bg-white sm:mb-4 sm:text-xl">
             Nuestra ubicación
           </h3>
-          <div className="mb-4 flex flex-col items-start justify-between space-y-2 text-xs sm:mb-6 sm:flex-row sm:items-center sm:space-y-0 sm:text-sm">
+          <div className="mb-2 flex flex-col items-start justify-between space-y-1 text-xs sm:mb-6 sm:flex-row sm:items-center sm:space-y-0 sm:text-sm">
             <p className="flex items-start">
               <svg
-                className="mr-2 h-5 w-5 flex-shrink-0"
+                className="mr-2 h-4 w-4 flex-shrink-0"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -113,7 +99,7 @@ export default function Footer() {
             </p>
             <p className="flex items-center">
               <svg
-                className="mr-2 h-5 w-5"
+                className="mr-2 h-4 w-4"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -123,7 +109,7 @@ export default function Footer() {
             </p>
             <p className="flex items-center">
               <svg
-                className="mr-2 h-5 w-5"
+                className="mr-2 h-4 w-4"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -136,7 +122,7 @@ export default function Footer() {
           <div className="overflow-hidden border border-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]">
             <iframe
               src="https://maps.google.com/maps?q=Zonzamas%2C%20Lanzarote&t=&z=15&ie=UTF8&iwloc=&output=embed"
-              className="h-40 w-full filter sm:h-64"
+              className="h-28 w-full filter sm:h-64"
               frameBorder="0"
               allowFullScreen
               aria-hidden="false"
@@ -147,7 +133,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom section */}
-      <div className="border-t border-gray-800 py-4 sm:py-6">
+      <div className="border-t border-gray-800 py-2 sm:py-6">
         <div className="container mx-auto flex flex-col items-center justify-between space-y-2 px-2 sm:space-y-4 sm:px-6 md:flex-row md:space-y-0">
           <SocialLinks />
           <p className="text-xs opacity-80 sm:text-sm">
