@@ -42,7 +42,6 @@ export default function NuestraMision() {
     typeof window !== 'undefined' ? window.innerWidth < 640 : false;
   const prodProps = isMobile ? prodPropsMobile : prodPropsDesktop;
   const currentProps: CellViewerProps = {
-    devMode: false,
     disableRotation: false,
     ...prodProps,
     rotX: (prodProps.rotX ?? 0) * (Math.PI / 180),
@@ -55,20 +54,22 @@ export default function NuestraMision() {
   return (
     <section
       id="mision"
-      className="relative flex h-[100dvh] w-full snap-start flex-col overflow-hidden bg-gray-100 mask-t-from-99% text-black backdrop-blur-sm sm:flex-row sm:p-8"
+      className="relative flex h-[100dvh] snap-start flex-col overflow-hidden bg-gray-100 p-4 sm:p-8"
     >
-      <div className="relative z-10 m-4 mt-4 flex w-full flex-col gap-12 select-none sm:mt-8 sm:ml-12 sm:w-1/2 sm:gap-24">
-        <h2 className="text-3xl font-medium tracking-wider sm:text-6xl">
+      <div className="z-20 mr-0 sm:mr-12">
+        <h2 className="text-left text-3xl font-medium text-black sm:text-6xl">
           Nuestra Misión
         </h2>
         <div className="leading-wide text-base font-light tracking-wide text-pretty sm:text-xl">
           <BlurText
             delay={50}
-            text="Nuestra misión es proporcionar herramientas y servicios que permitan a las personas identificar y clasificar las células en las  imágenes de manera precisa y eficiente."
+            text="Nuestra misión es proporcionar herramientas y servicios que permitan a las personas identificar y clasificar las células en las imágenes de manera precisa y eficiente."
           />
         </div>
       </div>
-      <CellViewer {...currentProps} />
+      <div className="before:bg-opacity-1 z-10 h-full before:absolute before:-z-10 before:size-[100vw] before:translate-x-[-130vh] before:rounded-full before:bg-red-200 before:blur-3xl">
+        <CellViewer {...currentProps} />
+      </div>
     </section>
   );
 }
