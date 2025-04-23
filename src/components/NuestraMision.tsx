@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import BlurText from './BlurText/BlurText';
 import CellViewer, { CellViewerProps } from './CellViewer';
 
@@ -37,9 +38,19 @@ const prodPropsDesktop: Omit<CellViewerProps, 'devMode' | 'disableRotation'> = {
 };
 
 export default function NuestraMision() {
-  // Detectar si es móvil (ancho < 640px)
-  const isMobile =
-    typeof window !== 'undefined' ? window.innerWidth < 640 : false;
+  // Estado reactivo para detectar si es móvil (ancho < 640px)
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 640 : false
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 640);
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const prodProps = isMobile ? prodPropsMobile : prodPropsDesktop;
   const currentProps: CellViewerProps = {
     disableRotation: false,
@@ -67,7 +78,7 @@ export default function NuestraMision() {
           />
         </div>
       </div>
-      <div className="before:bg-opacity-1 z-10 h-full before:absolute before:-z-10 before:size-[100vw] before:translate-x-[-130vh] before:rounded-full before:bg-red-200 before:blur-3xl">
+      <div className="z-10 h-full before:absolute before:top-1/2 before:left-1/2 before:-z-10 before:h-[80vh] before:w-[120vw] before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-red-200 before:opacity-40 before:blur-3xl">
         <CellViewer {...currentProps} />
       </div>
     </section>
