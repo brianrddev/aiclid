@@ -10,13 +10,11 @@
 
 import { useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Stats } from '@react-three/drei';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { Group, Object3D, Mesh } from 'three';
 
 export interface CellViewerProps {
-  devMode?: boolean; // <-- Nueva prop para controlar ayudas visuales
   cellSize?: number;
   cellX?: number;
   cellY?: number;
@@ -50,7 +48,7 @@ function ModelLoader({
   disableRotation = false,
   rotateYSpeed = 0.001,
   rotateXSpeed = 0,
-}: Omit<CellViewerProps, 'devMode'>) {
+}: CellViewerProps) {
   const groupRef = useRef<Group>(null);
   const modelRef = useRef<Group>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -95,7 +93,7 @@ function ModelLoader({
             meshRefs.current.push(mesh);
             // Posición base en círculo (aún más cerca)
             const angle = (2 * Math.PI * meshIndex) / Math.max(1, meshCount);
-            const radius = 0.7; // Más cerca para todos los dispositivos
+            const radius = 0.5; // Más cerca para todos los dispositivos
             const baseX = Math.cos(angle) * radius;
             const baseY = Math.sin(angle) * radius;
             const baseZ = 0;
@@ -127,9 +125,9 @@ function ModelLoader({
             mesh.material = newMaterial;
             meshRandoms.current[meshIndex] = {
               speedX:
-                (Math.random() * 0.5 + 0.1) * (Math.random() > 0.5 ? 1 : -1),
+                (Math.random() * 0.3 + 0.1) * (Math.random() > 0.5 ? 1 : -1),
               speedY:
-                (Math.random() * 0.5 + 0.1) * (Math.random() > 0.5 ? 1 : -1),
+                (Math.random() * 0.4 + 0.1) * (Math.random() > 0.5 ? 1 : -1),
               dirX: Math.random() > 0.5 ? 1 : -1,
               dirY: Math.random() > 0.5 ? 1 : -1,
               basePos: [baseX, baseY, baseZ],
@@ -226,13 +224,11 @@ function ModelLoader({
   );
 }
 
-export default function CellViewer({
-  devMode = false,
-  ...props
-}: CellViewerProps = {}) {
+export default function CellViewer({ ...props }: CellViewerProps = {}) {
   return (
     <div
       id="cell-viewer"
+      className="cellviewer-shadow"
       style={{
         position: 'absolute',
         top: 0,
@@ -241,7 +237,6 @@ export default function CellViewer({
         height: '100dvh',
         zIndex: 0,
         overflow: 'visible',
-        pointerEvents: devMode ? 'auto' : 'none',
       }}
     >
       <Canvas
@@ -260,23 +255,26 @@ export default function CellViewer({
           near: 1,
           far: 1000,
         }}
+        shadows // Habilita sombras en el canvas
       >
         <ambientLight intensity={2} />
-        <directionalLight position={[120, 10, 20]} intensity={3} />
+        <directionalLight
+          position={[120, 10, 20]}
+          intensity={3}
+          castShadow
+          shadow-mapSize-width={2048}
+          shadow-mapSize-height={2048}
+        />
         <hemisphereLight groundColor="#330000" intensity={2} />
-
-        {/* --- Ayudas visuales condicionales --- */}
-        {devMode && (
-          <>
-            <gridHelper args={[200, 20, '#888', '#ccc']} />
-            <axesHelper args={[100]} />
-            {/* Habilitar OrbitControls solo en modo dev */}
-            <OrbitControls />
-            <Stats />
-          </>
-        )}
-        {/* --- Fin Ayudas visuales --- */}
-
+        {/* Plano receptor de sombras */}
+        <mesh
+          receiveShadow
+          position={[0, -2, 0]}
+          rotation={[-Math.PI / 2, 0, 0]}
+        >
+          <planeGeometry args={[20, 20]} />
+          <shadowMaterial opacity={0.25} />
+        </mesh>
         {/* Pasamos el resto de props a ModelLoader */}
         <ModelLoader {...props} />
       </Canvas>
