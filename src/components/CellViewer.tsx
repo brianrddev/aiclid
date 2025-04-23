@@ -1,143 +1,204 @@
+// Props de CellViewer:
+// cellSize: Escala/tamaño del modelo 3D de la célula.
+// cellX, cellY, cellZ: Posición del modelo en el canvas (ejes X, Y, Z).
+// rotX, rotY, rotZ: Rotación inicial del modelo en radianes (ejes X, Y, Z).
+// opacity: Opacidad del material de la célula (0 a 1).
+// color: Color principal del material de la célula (hex o nombre).
+// metalness: Nivel de metalicidad del material (0 = no metálico, 1 = muy metálico).
+// roughness: Rugosidad del material (0 = muy brillante, 1 = mate).
+// wireframe: Si es true, muestra el modelo en modo wireframe (solo líneas).
+
 import { useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, Stats } from '@react-three/drei';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { Group, Object3D, Mesh } from 'three';
 
-function ModelLoader() {
-  const groupRef = useRef(null);
+export interface CellViewerProps {
+  devMode?: boolean; // <-- Nueva prop para controlar ayudas visuales
+  cellSize?: number;
+  cellX?: number;
+  cellY?: number;
+  cellZ?: number;
+  rotX?: number; // Radianes
+  rotY?: number; // Radianes
+  rotZ?: number; // Radianes
+  opacity?: number;
+  color?: string;
+  metalness?: number;
+  roughness?: number;
+  wireframe?: boolean;
+  disableRotation?: boolean;
+  rotateYSpeed?: number; // Grados/frame
+  rotateXSpeed?: number; // Grados/frame
+}
 
-  // Estado para control de errores y de "cargando"
-  const [error, setError] = useState(null);
+function ModelLoader({
+  cellSize = 35,
+  cellX = 0,
+  cellY = 0,
+  cellZ = 0,
+  rotX = 0,
+  rotY = 0,
+  rotZ = 0,
+  opacity = 0.9,
+  color = '#bb0000',
+  metalness = 0.0,
+  roughness = 0.8,
+  wireframe = false,
+  disableRotation = false,
+  rotateYSpeed = 0.001,
+  rotateXSpeed = 0,
+}: Omit<CellViewerProps, 'devMode'>) {
+  const groupRef = useRef<Group>(null);
+  const modelRef = useRef<Group>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Creamos un loader para GLTF
     const loader = new GLTFLoader();
-
-    // Cargamos el archivo scene.gltf
     loader.load(
       '/scene.gltf',
       (gltf) => {
-        // Obtenemos el "scene" principal del GLTF
         const model = gltf.scene;
-
-        // 1. Calcular el bounding box para centrar el modelo en (0,0,0)
         const box = new THREE.Box3().setFromObject(model);
         const center = box.getCenter(new THREE.Vector3());
-        model.position.sub(center);
-
-        // 2. Escalar el modelo - aumentamos el tamaño
-        model.scale.set(35, 35, 35);
-
-        // 3. Modificar materiales para quitar efecto metálico
-        model.traverse((node) => {
-          if (node.isMesh && node.material) {
-            // Crear un material más natural para la célula roja
+        model.position.sub(center); // Centrar el modelo en el grupo
+        model.scale.set(cellSize, cellSize, cellSize);
+        model.rotation.set(rotX, rotY, rotZ);
+        model.traverse((node: Object3D) => {
+          const mesh = node as Mesh;
+          if (mesh.isMesh && mesh.material) {
             const newMaterial = new THREE.MeshStandardMaterial({
-              color: new THREE.Color('#bb0000'), // Rojo más suave y natural
-              roughness: 0.8, // Alta rugosidad (menos reflejo)
-              metalness: 0.0, // Sin efecto metálico
-              flatShading: false, // Para una apariencia más suave
+              color: new THREE.Color(color),
+              roughness,
+              metalness,
+              flatShading: false,
+              wireframe,
             });
-
-            // Conservamos solo el mapa normal si existe
-            if (node.material.normalMap) {
+            if ((mesh.material as any).normalMap) {
               const textureLoader = new THREE.TextureLoader();
               const normalTex = textureLoader.load(
                 '/textures/RBCtexture_normal.png'
               );
               newMaterial.normalMap = normalTex;
-              newMaterial.normalScale = new THREE.Vector2(0.5, 0.5); // Reducir intensidad del normal map
+              newMaterial.normalScale = new THREE.Vector2(0.5, 0.5);
             }
-
-            // Añadir un poco de translucidez
-            newMaterial.transparent = true;
-            newMaterial.opacity = 0.9;
-
-            // Aplicar el nuevo material
-            node.material = newMaterial;
+            newMaterial.transparent = opacity < 1;
+            newMaterial.opacity = opacity;
+            mesh.material = newMaterial;
           }
         });
-
-        // Añadimos el modelo al "groupRef"
-        if (groupRef.current) {
-          groupRef.current.add(model);
+        if (modelRef.current) {
+          // Limpiar modelos anteriores
+          while (modelRef.current.children.length) {
+            modelRef.current.remove(modelRef.current.children[0]);
+          }
+          modelRef.current.add(model);
         }
-
-        // Terminó de cargar
         setIsLoading(false);
       },
       (xhr) => {
-        // Progreso de carga
         console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
       },
       (err) => {
         console.error('Error al cargar el modelo:', err);
-        setError(err);
+        setError(
+          err instanceof Error
+            ? err
+            : new Error('Error desconocido al cargar modelo')
+        );
         setIsLoading(false);
       }
     );
-
-    // Cleanup al desmontar
     return () => {
-      if (groupRef.current) {
-        while (groupRef.current.children.length) {
-          groupRef.current.remove(groupRef.current.children[0]);
+      if (modelRef.current) {
+        while (modelRef.current.children.length) {
+          modelRef.current.remove(modelRef.current.children[0]);
         }
       }
     };
-  }, []);
+  }, [
+    cellSize,
+    rotX,
+    rotY,
+    rotZ,
+    opacity,
+    color,
+    metalness,
+    roughness,
+    wireframe,
+  ]);
 
-  // Rotación continua en el eje Y (giro "horizontal")
   useFrame(() => {
+    if (modelRef.current && !disableRotation) {
+      modelRef.current.rotation.y += (rotateYSpeed * Math.PI) / 180;
+      modelRef.current.rotation.x += (rotateXSpeed * Math.PI) / 180;
+    }
     if (groupRef.current) {
-      groupRef.current.rotation.y += 0.001; // Ajusta la velocidad a tu gusto
+      groupRef.current.position.set(cellX, cellY, cellZ);
     }
   });
 
   return (
     <group ref={groupRef}>
-      {/* Mientras está cargando y no hay error, mostramos una esfera en wireframe */}
-      {isLoading && !error && (
-        <mesh>
-          <sphereGeometry args={[1, 16, 16]} />
-          <meshStandardMaterial color="orange" wireframe />
-        </mesh>
-      )}
-      {/* Si hay error, mostramos un cubo rojo */}
-      {error && (
-        <mesh>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color="red" />
-        </mesh>
-      )}
+      <group ref={modelRef}>
+        {isLoading && !error && (
+          <mesh>
+            <sphereGeometry args={[1, 16, 16]} />
+            <meshStandardMaterial color="orange" wireframe />
+          </mesh>
+        )}
+        {error && (
+          <mesh>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color="red" />
+          </mesh>
+        )}
+      </group>
     </group>
   );
 }
 
-export default function CellViewer() {
+export default function CellViewer({
+  devMode = false,
+  ...props
+}: CellViewerProps = {}) {
   return (
-    <Canvas
-      className="h-full w-full bg-transparent"
-      camera={{
-        // Alejamos la cámara para poder ver el modelo completo a pesar de ser más grande
-        position: [120, -500, 0],
-        fov: 8, // Aumentamos ligeramente el campo de visión
-        near: 1,
-        far: 1000,
-      }}
+    <div
+      id="cell-viewer"
+      // Permitir interacción con OrbitControls solo en modo dev
+      className={`absolute z-0 h-full w-full ${devMode ? '' : 'pointer-events-none'}`}
     >
-      {/* Iluminación suavizada para material no metálico */}
-      <ambientLight intensity={2} />
+      <Canvas
+        className="h-full w-full bg-transparent"
+        camera={{
+          position: [0, 0, 300],
+          fov: 60,
+          near: 1,
+          far: 1000,
+        }}
+      >
+        <ambientLight intensity={2} />
+        <directionalLight position={[120, 10, 20]} intensity={3} />
+        <hemisphereLight groundColor="#330000" intensity={2} />
 
-      {/* Luz direccional más suave */}
-      <directionalLight position={[120, 10, 20]} intensity={3} />
+        {/* --- Ayudas visuales condicionales --- */}
+        {devMode && (
+          <>
+            <gridHelper args={[200, 20, '#888', '#ccc']} />
+            <axesHelper args={[100]} />
+            {/* Habilitar OrbitControls solo en modo dev */}
+            <OrbitControls />
+            <Stats />
+          </>
+        )}
+        {/* --- Fin Ayudas visuales --- */}
 
-      {/* Luz de relleno suave */}
-      <hemisphereLight groundColor="#330000" intensity={2} />
-
-      {/* Componente que carga el modelo y aplica materiales no metálicos */}
-      <ModelLoader />
-    </Canvas>
+        {/* Pasamos el resto de props a ModelLoader */}
+        <ModelLoader {...props} />
+      </Canvas>
+    </div>
   );
 }
