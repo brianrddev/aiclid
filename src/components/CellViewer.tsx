@@ -55,8 +55,23 @@ function ModelLoader({
   const modelRef = useRef<Group>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  // Guardar referencias a cada mesh para rotarlas individualmente
+  const meshRefs = useRef<Mesh[]>([]);
+  // Guardar datos aleatorios para cada mesh
+  const meshRandoms = useRef<
+    {
+      speedX: number;
+      speedY: number;
+      dirX: number;
+      dirY: number;
+      basePos: [number, number, number];
+      phase: number;
+    }[]
+  >([]);
 
   useEffect(() => {
+    meshRefs.current = [];
+    meshRandoms.current = [];
     const loader = new GLTFLoader();
     loader.load(
       '/scene.gltf',
@@ -64,16 +79,38 @@ function ModelLoader({
         const model = gltf.scene;
         const box = new THREE.Box3().setFromObject(model);
         const center = box.getCenter(new THREE.Vector3());
-        model.position.sub(center); // Centrar el modelo en el grupo
+        model.position.sub(center);
         model.scale.set(cellSize, cellSize, cellSize);
         model.rotation.set(rotX, rotY, rotZ);
+        // Distribuir en círculo para evitar colisiones
+        let meshIndex = 0;
+        const totalMeshes: number[] = [];
+        model.traverse((node: Object3D) => {
+          if ((node as Mesh).isMesh) totalMeshes.push(1);
+        });
+        const meshCount = totalMeshes.length;
         model.traverse((node: Object3D) => {
           const mesh = node as Mesh;
           if (mesh.isMesh && mesh.material) {
+            meshRefs.current.push(mesh);
+            // Posición base en círculo (aún más cerca)
+            const angle = (2 * Math.PI * meshIndex) / Math.max(1, meshCount);
+            const radius = 0.7; // Más cerca para todos los dispositivos
+            const baseX = Math.cos(angle) * radius;
+            const baseY = Math.sin(angle) * radius;
+            const baseZ = 0;
+            mesh.position.set(baseX, baseY, baseZ);
+            // Todas las células: mismo color y rugosidad, solo varía tamaño, rotación, posición
+            const redColor = '#c51d1d';
+            const commonRoughness = 0.55;
+            const commonMetalness = 0.18;
+            // Tamaño aleatorio para cada mesh
+            const scale = 0.85 + Math.random() * 0.3; // entre 0.85 y 1.15
+            mesh.scale.set(scale, scale, scale);
             const newMaterial = new THREE.MeshStandardMaterial({
-              color: new THREE.Color(color),
-              roughness,
-              metalness,
+              color: new THREE.Color(redColor),
+              roughness: commonRoughness,
+              metalness: commonMetalness,
               flatShading: false,
               wireframe,
             });
@@ -88,10 +125,20 @@ function ModelLoader({
             newMaterial.transparent = opacity < 1;
             newMaterial.opacity = opacity;
             mesh.material = newMaterial;
+            meshRandoms.current[meshIndex] = {
+              speedX:
+                (Math.random() * 0.5 + 0.1) * (Math.random() > 0.5 ? 1 : -1),
+              speedY:
+                (Math.random() * 0.5 + 0.1) * (Math.random() > 0.5 ? 1 : -1),
+              dirX: Math.random() > 0.5 ? 1 : -1,
+              dirY: Math.random() > 0.5 ? 1 : -1,
+              basePos: [baseX, baseY, baseZ],
+              phase: Math.random() * Math.PI * 2,
+            };
+            meshIndex++;
           }
         });
         if (modelRef.current) {
-          // Limpiar modelos anteriores
           while (modelRef.current.children.length) {
             modelRef.current.remove(modelRef.current.children[0]);
           }
@@ -118,6 +165,8 @@ function ModelLoader({
           modelRef.current.remove(modelRef.current.children[0]);
         }
       }
+      meshRefs.current = [];
+      meshRandoms.current = [];
     };
   }, [
     cellSize,
@@ -131,10 +180,26 @@ function ModelLoader({
     wireframe,
   ]);
 
-  useFrame(() => {
-    if (modelRef.current && !disableRotation) {
-      modelRef.current.rotation.y += (rotateYSpeed * Math.PI) / 180;
-      modelRef.current.rotation.x += (rotateXSpeed * Math.PI) / 180;
+  useFrame((state) => {
+    if (!disableRotation && meshRefs.current.length > 0) {
+      const t = state.clock.getElapsedTime();
+      meshRefs.current.forEach((mesh, i) => {
+        const rand = meshRandoms.current[i] || {
+          speedX: 0.2,
+          speedY: 0.2,
+          dirX: 1,
+          dirY: 1,
+          basePos: [0, 0, 0],
+          phase: 0,
+        };
+        // Oscilación alrededor de la posición base (más pequeña)
+        mesh.position.x =
+          rand.basePos[0] + Math.sin(t * rand.speedX + rand.phase) * 0.18;
+        mesh.position.y =
+          rand.basePos[1] + Math.cos(t * rand.speedY + rand.phase) * 0.18;
+        mesh.rotation.y += rand.speedY * rand.dirY * 0.01;
+        mesh.rotation.x += rand.speedX * rand.dirX * 0.01;
+      });
     }
     if (groupRef.current) {
       groupRef.current.position.set(cellX, cellY, cellZ);
@@ -168,11 +233,27 @@ export default function CellViewer({
   return (
     <div
       id="cell-viewer"
-      // Permitir interacción con OrbitControls solo en modo dev
-      className={`absolute z-0 h-full w-full ${devMode ? '' : 'pointer-events-none'}`}
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100dvh',
+        zIndex: 0,
+        overflow: 'visible',
+        pointerEvents: devMode ? 'auto' : 'none',
+      }}
     >
       <Canvas
-        className="h-full w-full bg-transparent"
+        className="bg-transparent"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100dvh',
+          overflow: 'visible',
+        }}
         camera={{
           position: [0, 0, 300],
           fov: 60,

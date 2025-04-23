@@ -55,7 +55,7 @@ const prodPropsDesktop: Omit<CellViewerProps, 'devMode' | 'disableRotation'> = {
 export default function NuestraMision() {
   // --- Modo Desarrollo ---
   // Cambiar a 'false' para build de producción
-  const [isDevMode, setIsDevMode] = useState(true);
+  const [isDevMode, setIsDevMode] = useState(false);
   const [rotationEnabled, setRotationEnabled] = useState(true);
 
   // --- ESTILOS PARA EL MENÚ DEV ---
