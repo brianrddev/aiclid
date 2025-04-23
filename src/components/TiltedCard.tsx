@@ -1,7 +1,6 @@
 import type { SpringOptions } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import Dither from '../backgrounds/Dither/Dither';
 
 interface TiltedCardProps {
   imageSrc: React.ComponentProps<'img'>['src'];
@@ -93,30 +92,26 @@ export default function TiltedCard({
   return (
     <figure
       ref={ref}
-      className={`group relative flex h-[160px] h-full w-full flex-col items-center justify-center [perspective:800px] sm:h-full sm:w-full`}
+      className="group xs:h-[80px] xs:w-[80px] relative flex aspect-square h-[70px] w-[70px] flex-col items-center justify-center [perspective:800px] sm:h-[100px] sm:w-[100px] md:h-[120px] md:w-[120px] lg:h-[140px] lg:w-[140px]"
       style={{
-        height: '100%',
-        width: '100%',
-        maxWidth: '100%',
-        maxHeight: '100%',
+        height: containerHeight,
+        width: containerWidth,
       }}
       onMouseMove={handleMouse}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Oculta advertencia en móvil y ajusta tamaño */}
       {showMobileWarning && (
-        <div className="absolute top-2 left-1/2 hidden -translate-x-1/2 text-center text-xs sm:hidden">
-          {/* Oculto en móvil */}
+        <div className="absolute top-4 block text-center text-sm sm:hidden">
+          This effect is not optimized for mobile. Check on desktop.
         </div>
       )}
+
       <motion.div
         className={`relative [transform-style:preserve-3d] ` + className}
         style={{
-          width: '100%',
-          height: '100%',
-          maxWidth: '100%',
-          maxHeight: '100%',
+          width: imageWidth,
+          height: imageHeight,
           rotateX,
           rotateY,
           scale,
@@ -125,19 +120,26 @@ export default function TiltedCard({
         <motion.img
           src={imageSrc}
           alt={altText}
-          className="absolute top-0 left-0 z-2 mx-auto h-[120px] w-[120px] [transform:translateZ(0)] rounded-[12px] object-cover grayscale transition duration-100 will-change-transform group-hover:grayscale-0 sm:h-[180px] sm:w-[180px]"
-          style={{}}
+          className="absolute top-0 left-0 z-2 h-full w-full [transform:translateZ(0)] rounded-[15px] object-cover transition duration-100 will-change-transform"
+          style={{
+            width: imageWidth,
+            height: imageHeight,
+          }}
         />
         {displayOverlayContent && overlayContent && (
           <motion.div
-            className="absolute right-0 left-0 z-4 mx-auto w-fit [transform:translateZ(30px)] rounded-md bg-black p-1 text-center text-xs text-white opacity-60 will-change-transform sm:text-sm"
-            style={{ top: '10%' }}
+            className="absolute right-0 left-0 z-4 mx-auto w-fit [transform:translateZ(60px)] rounded-md bg-black p-1.5 text-center text-white opacity-80 will-change-transform"
+            style={{
+              top: '12%',
+              boxShadow: '0 4px 10px rgba(0,0,0,0.5)',
+              border: '1px solid rgba(255,255,255,0.3)',
+              textShadow: '0 0 3px rgba(255,255,255,0.5)',
+            }}
           >
             {overlayContent}
           </motion.div>
         )}
       </motion.div>
-      {/* Tooltips solo en desktop (ya estaban comentados) */}
     </figure>
   );
 }

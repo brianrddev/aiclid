@@ -14,40 +14,49 @@ export default function Galeria() {
   return (
     <section
       id="galeria"
-      className="flex h-[100dvh] snap-start flex-col bg-gray-100 p-4 sm:p-8"
+      className="flex h-[100dvh] snap-start flex-col bg-gray-100 p-4 px-6 pt-8 sm:p-8 md:p-10 lg:p-12"
     >
-      <div className="mr-0 sm:mr-12">
-        <h2 className="text-right text-3xl font-medium text-black sm:text-6xl">
+      {/* Encabezado centrado en móvil, alineado a la derecha en pantallas más grandes */}
+      <div className="sm:mr-8 sm:mb-4 md:mr-12">
+        <h2 className="text-right text-3xl font-medium text-black sm:text-right sm:text-4xl md:text-5xl lg:text-6xl">
           Galería de Células
         </h2>
-        <div className="mt-2 text-right text-base font-light text-pretty sm:mt-4 sm:text-xl">
+        <div className="mt-2 text-right text-sm font-light text-pretty sm:text-right sm:text-lg md:text-xl">
           <p className="leading-wide tracking-wide">
             Explora nuestra galería de imágenes de células sanguíneas. Haz clic
             en cada celda para ver más detalles.
           </p>
         </div>
       </div>
-      <div className="flex flex-1 items-center justify-center">
-        <div className="celulas mx-auto grid w-full max-w-5xl grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+
+      {/* Contenedor de la galería con más espacio vertical en móvil */}
+      <div className="flex w-full flex-1 items-center justify-center">
+        <div className="mx-auto flex w-full max-w-5xl flex-wrap justify-center gap-5 sm:gap-6 md:gap-8">
           {celulas.map((celula, i) => (
-            <TiltedCard
+            <div
               key={i}
-              className="z-0 rounded-xl bg-gray-300 shadow-lg"
-              imageSrc={`./${celula.toLowerCase()}.png`}
-              altText={celula}
-              containerHeight="100%"
-              containerWidth="100%"
-              imageHeight="100%"
-              imageWidth="100%"
-              rotateAmplitude={12}
-              scaleOnHover={1.2}
-              showMobileWarning={false}
-              showTooltip={true}
-              displayOverlayContent={true}
-              overlayContent={
-                <p className="text-xs font-medium sm:text-sm">{celula}</p>
-              }
-            />
+              className="xs:h-[100px] xs:w-[100px] flex h-[100px] w-[100px] items-center justify-center p-1 sm:h-[120px] sm:w-[120px] md:h-[120px] md:w-[120px] lg:h-[140px] lg:w-[140px]"
+            >
+              <TiltedCard
+                className="z-0 rounded-xl bg-gray-300 shadow-lg"
+                imageSrc={`./${celula.toLowerCase()}.png`}
+                altText={celula}
+                containerHeight="100%"
+                containerWidth="100%"
+                imageHeight="100%"
+                imageWidth="100%"
+                rotateAmplitude={10}
+                scaleOnHover={1.05}
+                showMobileWarning={false}
+                showTooltip={true}
+                displayOverlayContent={true}
+                overlayContent={
+                  <p className="xs:text-[9px] text-[8px] font-medium sm:text-[10px] md:text-[11px] lg:text-xs">
+                    {celula}
+                  </p>
+                }
+              />
+            </div>
           ))}
         </div>
       </div>
