@@ -30,7 +30,6 @@ function App() {
           <Galeria />
           <ComoFunciona />
           <Equipo />
-          <Contacto />
         </main>
         <Footer />
       </div>

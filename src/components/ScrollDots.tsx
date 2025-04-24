@@ -11,7 +11,7 @@ export function ScrollDots({ mobile = false }: { mobile?: boolean }) {
       { id: 'galeria', label: 'Galería' },
       { id: 'ia', label: 'IA' },
       { id: 'equipo', label: 'Equipo' },
-      { id: 'contacto', label: 'Contacto' },
+      { id: 'footer', label: 'Footer' },
     ],
     []
   );
@@ -52,13 +52,16 @@ export function ScrollDots({ mobile = false }: { mobile?: boolean }) {
     <div
       className={
         mobile
-          ? 'flex gap-2 pointer-events-auto' // versión móvil: horizontal, más pequeño
+          ? 'pointer-events-auto flex gap-2' // versión móvil: horizontal, más pequeño
           : 'fixed top-1/2 left-8 z-50 flex -translate-y-1/2 flex-col items-center gap-4'
       }
       aria-label="Navegación por secciones"
     >
       {sections.map((s, i) => (
-        <div key={s.id} className={mobile ? '' : 'group relative flex flex-col items-center'}>
+        <div
+          key={s.id}
+          className={mobile ? '' : 'group relative flex flex-col items-center'}
+        >
           <button
             aria-label={s.label}
             onClick={() => handleClick(s.id)}

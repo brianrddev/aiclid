@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef } from 'react';
 export function SectionSnapScroll() {
   // IDs de las secciones principales (deben coincidir con ScrollDots)
   const sections = useMemo(
-    () => ['inicio', 'mision', 'galeria', 'ia', 'equipo', 'contacto', 'footer'],
+    () => ['inicio', 'mision', 'galeria', 'ia', 'equipo', 'footer'],
     []
   );
   const isScrolling = useRef(false);
@@ -50,7 +50,7 @@ export function SectionSnapScroll() {
       }
       setTimeout(() => {
         isScrolling.current = false;
-      }, 500); // Evita doble scroll muy rápido
+      }, 200); // Evita doble scroll muy rápido
     }
     window.addEventListener('wheel', onWheel, { passive: false });
     return () => window.removeEventListener('wheel', onWheel);
