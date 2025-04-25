@@ -18,57 +18,52 @@ const Timer: React.FC<TimerProps> = ({
 }) => {
   const [seconds, setSeconds] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const latestOnTimerUpdate = useRef(onTimerUpdate); // Ref to hold the latest callback
+  const prevResetKeyRef = useRef(resetKey); // Ref to track previous reset key
+
+  // Update the ref whenever onTimerUpdate changes
+  useEffect(() => {
+    latestOnTimerUpdate.current = onTimerUpdate;
+  }, [onTimerUpdate]);
 
   useEffect(() => {
-    // Reset timer when resetKey changes
-    setSeconds(0);
+    // Clear any existing interval when effect re-runs or component unmounts
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    // Start timer immediately if isRunning is true upon reset
+
+    // Reset seconds only when resetKey actually changes
+    if (resetKey !== prevResetKeyRef.current) {
+      setSeconds(0);
+      prevResetKeyRef.current = resetKey;
+    }
+
+    // Start a new interval only if isRunning is true
     if (isRunning) {
       intervalRef.current = setInterval(() => {
+        // Use functional update for setSeconds to avoid dependency on 'seconds' state
         setSeconds((prevSeconds) => {
           const newSeconds = prevSeconds + 1;
-          if (onTimerUpdate) {
-            onTimerUpdate(newSeconds);
+          // Call the latest version of onTimerUpdate from the ref
+          if (latestOnTimerUpdate.current) {
+            latestOnTimerUpdate.current(newSeconds);
           }
           return newSeconds;
         });
       }, 1000);
     }
-  }, [resetKey, isRunning, onTimerUpdate]); // Rerun effect if isRunning changes *after* reset
 
-  useEffect(() => {
-    if (isRunning) {
-      // Start timer if not already running
-      if (!intervalRef.current) {
-        intervalRef.current = setInterval(() => {
-          setSeconds((prevSeconds) => {
-            const newSeconds = prevSeconds + 1;
-            if (onTimerUpdate) {
-              onTimerUpdate(newSeconds);
-            }
-            return newSeconds;
-          });
-        }, 1000);
-      }
-    } else {
-      // Stop timer if running
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    }
-
-    // Cleanup interval on component unmount
+    // Cleanup function: clear interval on unmount or before effect re-runs
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = null; // Ensure ref is cleared
       }
     };
-  }, [isRunning, onTimerUpdate]);
+    // Dependencies: resetKey triggers reset, isRunning starts/stops.
+    // Omit onTimerUpdate by using the ref pattern.
+  }, [resetKey, isRunning]);
 
   return (
     <div className="text-center text-xl text-white md:text-2xl">
