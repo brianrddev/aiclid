@@ -20,12 +20,12 @@ export default function Header() {
     >
       <Logo className="h-8 w-8 text-white" />
       {/* Desktop nav */}
-      <div className="hidden lg:block">
+      <div className="hidden sm:block">
         <GooeyNav items={items} />
       </div>
       {/* Mobile hamburger/X button */}
       <button
-        className={`top-4 right-6 z-50 flex h-10 w-10 items-center justify-center transition-all duration-200 lg:hidden`}
+        className={`top-4 right-6 z-50 flex h-10 w-10 items-center justify-center transition-all duration-200 sm:hidden`}
         aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
         onClick={() => setOpen((v) => !v)}
         style={{ transitionProperty: 'background, border, box-shadow' }}
@@ -48,7 +48,7 @@ export default function Header() {
       </button>
       {/* Mobile dropdown + background fade/blur */}
       <div
-        className={`fixed inset-0 z-40 flex flex-col items-end transition-all duration-200 lg:hidden ${open ? 'pointer-events-auto bg-black/60 opacity-100 backdrop-blur-[6px]' : 'backdrop-blur-0 pointer-events-none bg-black/0 opacity-0'} `}
+        className={`fixed inset-0 z-40 flex flex-col items-end transition-all duration-200 sm:hidden ${open ? 'pointer-events-auto bg-black/60 opacity-100 backdrop-blur-[6px]' : 'backdrop-blur-0 pointer-events-none bg-black/0 opacity-0'} `}
         style={{ transitionProperty: 'opacity, background-color, filter' }}
         aria-hidden={!open}
       >
