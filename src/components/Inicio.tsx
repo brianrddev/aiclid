@@ -1,4 +1,5 @@
 import Aurora from '../backgrounds/Aurora/Aurora';
+import SectionLayout from '../Layouts/SectionLayout';
 
 export default function Inicio() {
   return (
@@ -6,11 +7,8 @@ export default function Inicio() {
       <div className="absolute -z-10 h-[100dvh] w-full">
         <Aurora />
       </div>
-      <section
-        id="inicio"
-        className="z-10 flex h-[100dvh] snap-start items-center justify-center p-4 text-center sm:p-8"
-      >
-        <div className="flex flex-col gap-6 text-white sm:gap-8">
+      <SectionLayout ScrollId="inicio" BackgroundColor="transparent">
+        <div className="flex w-full flex-col items-center justify-center gap-6 text-center text-white sm:gap-8">
           <h2 className="text-5xl font-semibold tracking-wide sm:text-8xl">
             AICLID
           </h2>
@@ -19,7 +17,7 @@ export default function Inicio() {
             glóbulos rojos, linfocitos y más, mediante inteligencia artificial.
           </p>
         </div>
-      </section>
+      </SectionLayout>
     </>
   );
 }

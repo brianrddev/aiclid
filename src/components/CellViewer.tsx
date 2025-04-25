@@ -228,7 +228,7 @@ export default function CellViewer({ ...props }: CellViewerProps = {}) {
   return (
     <div
       id="cell-viewer"
-      className="cellviewer-shadow overflow-visibles border border-red-500 lg:left-14"
+      className="cellviewer-shadow overflow-visibles lg:left-14"
       style={{
         position: 'absolute',
         top: -100,
@@ -239,7 +239,7 @@ export default function CellViewer({ ...props }: CellViewerProps = {}) {
       }}
     >
       <Canvas
-        className="overflow-visible border border-blue-500 bg-transparent"
+        className="overflow-visible bg-transparent"
         style={{
           position: 'absolute',
           top: 0,

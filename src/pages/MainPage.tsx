@@ -8,18 +8,16 @@ import NuestraMision from '../components/NuestraMision';
 
 export default function MainPage() {
   return (
-    <>
-      <div className="grid min-h-screen w-full min-w-full grid-rows-[auto_1fr_auto]">
-        <Header />
-        <main className="w-full min-w-full flex-grow overflow-y-auto">
-          <Inicio />
-          <NuestraMision />
-          <Galeria />
-          <ComoFunciona />
-          <Equipo />
-        </main>
-        <Footer />
-      </div>
-    </>
+    <div className="grid min-h-screen w-full min-w-full grid-rows-[auto_1fr_auto]">
+      <Header />
+      <main className="h-full w-full min-w-full flex-grow overflow-x-hidden overflow-y-auto">
+        <Inicio />
+        <NuestraMision />
+        <Galeria />
+        <ComoFunciona />
+        <Equipo />
+      </main>
+      <Footer />
+    </div>
   );
 }

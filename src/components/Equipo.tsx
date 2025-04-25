@@ -1,3 +1,4 @@
+import SectionLayout from '../Layouts/SectionLayout';
 import Masonry from './Masonry/Masonry';
 
 export default function Equipo() {
@@ -64,15 +65,14 @@ export default function Equipo() {
     }, // Investigador con microscopio
   ];
   return (
-    <section
-      id="equipo"
-      className="relative flex h-[100dvh] snap-start flex-col items-center gap-8 bg-gray-100 p-4 text-gray-950 sm:p-8"
-    >
-      <h2 className="z-10 text-3xl font-medium sm:text-4xl md:text-5xl lg:text-6xl">
-        Nuestro Equipo
-      </h2>
-      <Masonry data={data} />
-      <div className="absolute top-0 right-0 bottom-0 left-0 -z-0 h-full before:absolute before:top-1/2 before:left-1/2 before:-z-10 before:h-[80vh] before:w-[80vw] before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-red-200 before:opacity-80 before:blur-3xl"></div>
-    </section>
+    <SectionLayout ScrollId="equipo" BackgroundColor="white" Relative>
+      <div className="flex h-full w-full flex-col gap-16">
+        <h2 className="z-10 text-right text-3xl font-medium sm:text-4xl md:text-5xl lg:text-6xl">
+          Nuestro Equipo
+        </h2>
+        <Masonry data={data} />
+        <div className="absolute top-0 right-0 bottom-0 left-0 -z-0 h-full before:absolute before:top-1/2 before:left-1/2 before:-z-10 before:h-[600px] before:w-[1000px] before:-translate-x-1/1 before:-translate-y-1/1 before:rounded-full before:bg-red-500 before:opacity-15 before:blur-3xl"></div>
+      </div>
+    </SectionLayout>
   );
 }

@@ -1,5 +1,4 @@
 import SocialLinks from './FooterComponents/SocialLinks';
-import NewsForm from './FooterComponents/NewsForm';
 import { useState } from 'react';
 
 export default function Footer() {

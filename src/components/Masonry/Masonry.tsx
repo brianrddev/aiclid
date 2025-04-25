@@ -87,7 +87,7 @@ function Masonry({ data }: MasonryProps) {
   return (
     <div
       ref={ref}
-      className="relative z-10 h-full w-full max-w-[80dvw] overflow-hidden overflow-y-scroll lg:overflow-visible"
+      className="relative z-10 h-full w-full max-w-[80dvw] overflow-hidden grayscale"
       style={{ height: Math.max(...heights) }}
     >
       {transitions((style, item) => (
