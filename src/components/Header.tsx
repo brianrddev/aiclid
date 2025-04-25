@@ -48,7 +48,7 @@ export default function Header() {
       </button>
       {/* Mobile dropdown + background fade/blur */}
       <div
-        className={`fixed inset-0 z-40 flex flex-col items-end transition-all duration-200 sm:hidden ${open ? 'pointer-events-auto bg-black/60 opacity-100 backdrop-blur-[6px]' : 'backdrop-blur-0 pointer-events-none bg-black/0 opacity-0'} `}
+        className={`fixed inset-0 z-40 flex flex-col items-end transition-all duration-200 lg:hidden ${open ? 'pointer-events-auto bg-black/60 opacity-100 backdrop-blur-[6px]' : 'backdrop-blur-0 pointer-events-none bg-black/0 opacity-0'} `}
         style={{ transitionProperty: 'opacity, background-color, filter' }}
         aria-hidden={!open}
       >
