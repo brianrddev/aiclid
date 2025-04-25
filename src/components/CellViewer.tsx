@@ -228,26 +228,22 @@ export default function CellViewer({ ...props }: CellViewerProps = {}) {
   return (
     <div
       id="cell-viewer"
-      className="cellviewer-shadow lg:left-14"
+      className="cellviewer-shadow overflow-visibles border border-red-500 lg:left-14"
       style={{
         position: 'absolute',
-        top: 0,
+        top: -100,
         left: 0,
-        width: '100vw',
+        width: '100dvw',
         height: '100dvh',
-        zIndex: 0,
-        overflow: 'visible',
+        zIndex: 100,
       }}
     >
       <Canvas
-        className="bg-transparent"
+        className="overflow-visible border border-blue-500 bg-transparent"
         style={{
           position: 'absolute',
           top: 0,
           left: 0,
-          width: '100vw',
-          height: '100dvh',
-          overflow: 'visible',
         }}
         camera={{
           position: [0, 0, 300],

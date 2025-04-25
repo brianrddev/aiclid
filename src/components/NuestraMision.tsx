@@ -65,7 +65,7 @@ export default function NuestraMision() {
   return (
     <section
       id="mision"
-      className="relative flex h-[100dvh] snap-start flex-col overflow-hidden bg-gray-100 p-4 px-6 pt-8 sm:p-8 md:p-10 lg:p-12"
+      className="relative flex h-[100dvh] snap-start flex-col bg-gray-100 p-4 px-6 pt-8 sm:p-8 md:p-10 lg:p-12"
     >
       <div className="z-20 mr-0 flex flex-col gap-4 sm:mr-12">
         <h2 className="text-left text-3xl font-medium text-black sm:text-6xl">
