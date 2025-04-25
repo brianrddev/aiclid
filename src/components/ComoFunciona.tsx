@@ -2,39 +2,52 @@ export default function ComoFunciona() {
   return (
     <section
       id="ia"
-      className="relative flex h-[100dvh] snap-start flex-col items-center bg-gray-100 p-4 text-gray-950 sm:p-8"
+      className="relative flex h-[100dvh] snap-start flex-col items-center gap-8 bg-gray-100 p-4 text-gray-950 sm:p-8"
     >
-      <h2 className="mb-12 text-3xl font-semibold sm:mb-24 sm:text-6xl">
-        ¿Cómo Funciona la IA?
+      <h2 className="z-10 text-3xl font-medium sm:text-4xl md:text-5xl lg:text-6xl">
+        ¿Cómo funciona la IA?
       </h2>
-      <ol className="mx-auto max-w-3xl space-y-4 text-base sm:space-y-6 sm:text-xl">
-        <li className="flex rounded-md bg-gray-200 p-2 sm:p-4">
-          <span className="mr-2 font-bold sm:mr-4">1.</span>
-          <span>
+      <ol className="z-10 mx-auto max-w-3xl space-y-3 px-4 text-sm sm:space-y-6 sm:px-6 sm:text-base md:text-lg lg:text-xl">
+        {/* Mobile: más compacto, menos padding */}
+        <li className="flex items-center rounded-lg bg-white/90 p-3 shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg sm:rounded-xl sm:p-4 md:p-5">
+          <div className="mr-2 hidden h-6 w-6 items-center justify-center rounded-full bg-[#F62F63] text-xs text-white shadow-sm sm:mr-3 sm:h-8 sm:w-8 sm:text-sm md:mr-4 md:flex md:h-10 md:w-10 md:text-base">
+            1
+          </div>
+          <span className="text-gray-800">
             Nuestra inteligencia artificial analiza imágenes microscópicas de
             células.
           </span>
         </li>
-        <li className="flex rounded-md bg-gray-200 p-2 sm:p-4">
-          <span className="mr-2 font-bold sm:mr-4">2.</span>
-          <span>
+
+        <li className="flex items-center rounded-lg bg-white/90 p-3 shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg sm:rounded-xl sm:p-4 md:p-5">
+          <div className="mr-2 hidden h-6 w-6 items-center justify-center rounded-full bg-[#F62F63] text-xs text-white shadow-sm sm:mr-3 sm:h-8 sm:w-8 sm:text-sm md:mr-4 md:flex md:h-10 md:w-10 md:text-base">
+            2
+          </div>
+          <span className="text-gray-800">
             Extrae características visuales relevantes de las imágenes
             procesadas.
           </span>
         </li>
-        <li className="flex rounded-md bg-gray-200 p-2 sm:p-4">
-          <span className="mr-2 font-bold sm:mr-4">3.</span>
-          <span>
+
+        <li className="flex items-center rounded-lg bg-white/90 p-3 shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg sm:rounded-xl sm:p-4 md:p-5">
+          <div className="mr-2 hidden h-6 w-6 items-center justify-center rounded-full bg-[#F62F63] text-xs text-white shadow-sm sm:mr-3 sm:h-8 sm:w-8 sm:text-sm md:mr-4 md:flex md:h-10 md:w-10 md:text-base">
+            3
+          </div>
+          <span className="text-gray-800">
             Clasifica las células utilizando modelos de aprendizaje profundo.
           </span>
         </li>
-        <li className="flex rounded-md bg-gray-200 p-2 sm:p-4">
-          <span className="mr-2 font-bold sm:mr-4">4.</span>
-          <span>
+
+        <li className="flex items-center rounded-lg bg-white/90 p-3 shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg sm:rounded-xl sm:p-4 md:p-5">
+          <div className="mr-2 hidden h-6 w-6 items-center justify-center rounded-full bg-[#F62F63] text-xs text-white shadow-sm sm:mr-3 sm:h-8 sm:w-8 sm:text-sm md:mr-4 md:flex md:h-10 md:w-10 md:text-base">
+            4
+          </div>
+          <span className="text-gray-800">
             Proporciona resultados precisos que ayudan en el diagnóstico médico.
           </span>
         </li>
       </ol>
+      <div className="absolute top-0 right-0 bottom-0 left-0 -z-0 h-full before:absolute before:top-1/2 before:left-1/2 before:-z-10 before:h-[80vh] before:w-[80vw] before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-red-200 before:opacity-80 before:blur-3xl"></div>
     </section>
   );
 }

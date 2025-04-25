@@ -78,7 +78,7 @@ export default function NuestraMision() {
           />
         </div>
       </div>
-      <div className="z-10 h-full before:absolute before:top-1/2 before:left-1/2 before:-z-10 before:h-[80vh] before:w-[120vw] before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-red-200 before:opacity-40 before:blur-3xl">
+      <div className="z-10 h-full before:absolute before:top-1/2 before:left-1/2 before:-z-10 before:h-[80vh] before:w-[80vw] before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-red-200 before:opacity-80 before:blur-3xl">
         <CellViewer {...currentProps} />
       </div>
     </section>
