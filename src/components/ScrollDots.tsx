@@ -53,7 +53,7 @@ export function ScrollDots({ mobile = false }: { mobile?: boolean }) {
       className={
         mobile
           ? 'pointer-events-auto flex gap-2' // versión móvil: horizontal, más pequeño
-          : 'fixed top-1/2 left-8 z-50 flex -translate-y-1/2 flex-col items-center gap-4'
+          : 'fixed top-1/2 left-6 z-50 flex -translate-y-1/2 flex-col items-center gap-4'
       }
       aria-label="Navegación por secciones"
     >
@@ -67,8 +67,8 @@ export function ScrollDots({ mobile = false }: { mobile?: boolean }) {
             onClick={() => handleClick(s.id)}
             className={`rounded-full border-2 transition-all focus:outline-none ${
               mobile
-                ? `h-3 w-3 ${active === i ? 'scale-110 border-[#F62F63] bg-[#F62F63]' : 'border-[#171435] bg-white/80'}`
-                : `h-5 w-5 scale-75 ${
+                ? `h-2 w-2 ${active === i ? 'scale-110 border-[#F62F63] bg-[#F62F63]' : 'border-[#171435] bg-white/80'}`
+                : `h-3 w-3 scale-75 ${
                     active === i
                       ? 'scale-125 border-[#F62F63] bg-[#F62F63] shadow-lg'
                       : 'border-[#171435] bg-white/80 hover:border-[#ffa7bf] hover:bg-[#F62F63]'
