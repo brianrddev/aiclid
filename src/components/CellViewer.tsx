@@ -228,7 +228,7 @@ export default function CellViewer({ ...props }: CellViewerProps = {}) {
   return (
     <div
       id="cell-viewer"
-      className="cellviewer-shadow"
+      className="cellviewer-shadow lg:left-14"
       style={{
         position: 'absolute',
         top: 0,
