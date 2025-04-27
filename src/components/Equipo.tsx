@@ -36,7 +36,7 @@ export default function Equipo() {
     {
       id: 6,
       image:
-        'https://images.unsplash.com/photo-1594839688256-077c9f311a06?w=600&h=800',
+        'https://images.unsplash.com/photo-1576669801343-117bb4054118?w=800&h=600',
       height: 300,
     }, // Médico revisando imágenes
     {
@@ -54,7 +54,7 @@ export default function Equipo() {
     {
       id: 9,
       image:
-        'https://images.unsplash.com/photo-1624372696032-a9724c7c2fac?w=600&h=800',
+        'https://images.unsplash.com/photo-1676313414325-2a877a95dd10?&w=600&h=800',
       height: 200,
     }, // Analista de datos médicos
     {
