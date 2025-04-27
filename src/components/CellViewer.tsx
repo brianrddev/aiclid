@@ -194,7 +194,7 @@ function ModelLoader({
         mesh.position.x =
           rand.basePos[0] + Math.sin(t * rand.speedX + rand.phase) * 0.18;
         mesh.position.y =
-          rand.basePos[1] + Math.cos(t * rand.speedY + rand.phase) * 0.18;
+          rand.basePos[1] + Math.cos(t * rand.speedY + rand.phase) * 0.1;
         mesh.rotation.y += rand.speedY * rand.dirY * 0.01;
         mesh.rotation.x += rand.speedX * rand.dirX * 0.01;
       });
@@ -228,26 +228,13 @@ export default function CellViewer({ ...props }: CellViewerProps = {}) {
   return (
     <div
       id="cell-viewer"
-      className="cellviewer-shadow overflow-visibles lg:left-14"
-      style={{
-        position: 'absolute',
-        top: -100,
-        left: 0,
-        width: '100dvw',
-        height: '100dvh',
-        zIndex: 100,
-      }}
+      className="cellviewer-shadow overflow-visibles absolute -top-100 left-0 h-[140dvh] w-[100dvw]"
     >
       <Canvas
-        className="overflow-visible bg-transparent"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-        }}
+        className="absolute top-0 left-0 overflow-visible bg-transparent"
         camera={{
           position: [0, 0, 300],
-          fov: 60,
+          fov: 80,
           near: 1,
           far: 1000,
         }}
