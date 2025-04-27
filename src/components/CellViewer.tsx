@@ -228,7 +228,7 @@ export default function CellViewer({ ...props }: CellViewerProps = {}) {
   return (
     <div
       id="cell-viewer"
-      className="cellviewer-shadow overflow-visibles absolute -top-100 left-0 h-[140dvh] w-[100dvw]"
+      className="cellviewer-shadow overflow-visibles absolute h-[100dvh] w-[100dvw] sm:top-0 sm:h-[100dvh] md:-left-50 md:h-[100dvh] lg:h-[120dvh] xl:-top-100 xl:h-[140dvh] 2xl:h-[150dvh]"
     >
       <Canvas
         className="absolute top-0 left-0 overflow-visible bg-transparent"

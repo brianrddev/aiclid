@@ -5,7 +5,7 @@ import SectionLayout from '../Layouts/SectionLayout';
 
 // Props de CellViewer para producción
 const prodPropsMobile: Omit<CellViewerProps, 'devMode' | 'disableRotation'> = {
-  cellSize: 80,
+  cellSize: 100,
   cellX: 0,
   cellY: -10,
   cellZ: 0,
@@ -41,12 +41,12 @@ const prodPropsDesktop: Omit<CellViewerProps, 'devMode' | 'disableRotation'> = {
 export default function NuestraMision() {
   // Estado reactivo para detectar si es móvil (ancho < 640px)
   const [isMobile, setIsMobile] = useState(
-    typeof window !== 'undefined' ? window.innerWidth < 640 : false
+    typeof window !== 'undefined' ? window.innerWidth < 940 : false
   );
 
   useEffect(() => {
     function handleResize() {
-      setIsMobile(window.innerWidth < 640);
+      setIsMobile(window.innerWidth < 940);
     }
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -65,6 +65,10 @@ export default function NuestraMision() {
 
   return (
     <SectionLayout ScrollId="mision" BackgroundColor="white">
+      <div
+        id="mision-shadow"
+        className="before: before:w-20dvh before:-z-10 before:h-full before:bg-white/90 before:opacity-50 before:blur-[100px]"
+      ></div>
       <div className="relative h-full w-full">
         {/* Gradiente decorativo en el fondo */}
         <div className="absolute inset-0 before:absolute before:top-1/2 before:left-1/2 before:z-0 before:h-[80vh] before:w-[80vw] before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-red-200 before:opacity-60 before:blur-[100px] before:content-['']"></div>
