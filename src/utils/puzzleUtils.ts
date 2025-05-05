@@ -110,7 +110,6 @@ export const shufflePuzzle = (
   gridSize: number,
   shuffleMoves = gridSize * gridSize * 10 // Number of random moves
 ): TileState[] => {
-  let tiles = [...initialTiles]; // Shallow copy to modify indices
   const N = gridSize;
 
   const performShuffle = (): TileState[] => {
