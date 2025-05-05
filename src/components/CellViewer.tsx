@@ -46,12 +46,10 @@ function ModelLoader({
   roughness = 0.8,
   wireframe = false,
   disableRotation = false,
-  rotateYSpeed = 0.001,
-  rotateXSpeed = 0,
 }: CellViewerProps) {
   const groupRef = useRef<Group>(null);
   const modelRef = useRef<Group>(null);
-  const [error, setError] = useState<Error | null>(null);
+  const error = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   // Guardar referencias a cada mesh para rotarlas individualmente
   const meshRefs = useRef<Mesh[]>([]);

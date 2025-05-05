@@ -17,7 +17,7 @@ const Timer: React.FC<TimerProps> = ({
   resetKey,
 }) => {
   const [seconds, setSeconds] = useState(0);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<number | null>(null);
   const latestOnTimerUpdate = useRef(onTimerUpdate); // Ref to hold the latest callback
   const prevResetKeyRef = useRef(resetKey); // Ref to track previous reset key
 

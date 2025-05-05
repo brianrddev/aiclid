@@ -22,8 +22,6 @@ const PuzzleTile: React.FC<PuzzleTileProps> = ({
   tile,
   gridSize,
   imagePath,
-  imageWidth,
-  imageHeight,
   boardSize,
   onClick,
   isEmpty,
